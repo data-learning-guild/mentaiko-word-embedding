@@ -9,6 +9,7 @@ See:
 - [spaCy Universe][spacy_univ]
 - [spaCy Course][spacy_course]
 - [BQ Python client org][python_client_for_gbq]
+- [pandas-gbq からの移行 | Google Cloud Docs][pandas_gbq_and_gbq]
 
 [spacy_usage]: https://spacy.io/usage
 [spacy_models]: https://spacy.io/models
@@ -16,6 +17,7 @@ See:
 [spacy_univ]: https://spacy.io/universe
 [spacy_course]: https://course.spacy.io/ja/
 [python_client_for_gbq]: https://googleapis.dev/python/bigquery/latest/index.html
+[pandas_gbq_and_gbq]: https://cloud.google.com/bigquery/docs/pandas-gbq-migration?hl=ja
 
 ---
 
