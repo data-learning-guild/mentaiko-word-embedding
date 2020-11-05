@@ -6,6 +6,7 @@
 import spacy
 
 
+
 def main():
     nlp = spacy.load('ja_core_news_lg')
     doc = nlp('わたしは山田太郎ですよ。')
