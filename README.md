@@ -8,12 +8,14 @@ See:
 - [spaCy API][spacy_api]
 - [spaCy Universe][spacy_univ]
 - [spaCy Course][spacy_course]
+- [BQ Python client org][python_client_for_gbq]
 
 [spacy_usage]: https://spacy.io/usage
 [spacy_models]: https://spacy.io/models
 [spacy_api]: https://spacy.io/api
 [spacy_univ]: https://spacy.io/universe
 [spacy_course]: https://course.spacy.io/ja/
+[python_client_for_gbq]: https://googleapis.dev/python/bigquery/latest/index.html
 
 ---
 
@@ -39,4 +41,15 @@ python -m spacy download ja_core_news_lg
 
 ## Learning
 
+---
 
+## Usage
+
+```bash
+# activate virtual env
+source env/bin/activate
+# set environ values
+source ./set-envval.sh
+# execute script
+python main.py
+```
