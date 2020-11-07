@@ -9,6 +9,7 @@ import os
 import sys
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import spacy
 
@@ -18,7 +19,7 @@ from src.load import DlgDwhLoader
 HERE = str(Path(__file__).resolve().parent)
 
 def overlap(_x: list, _y: list) -> float:
-    """overlap coefficient
+    """overlap coefficient (Unuse)
         Szymkiewicz-Simpson coefficient)
         https://en.wikipedia.org/wiki/Overlap_coefficient
     """
@@ -26,12 +27,19 @@ def overlap(_x: list, _y: list) -> float:
     set_y = frozenset(_y)
     return len(set_x & set_y) / float(min(map(len, (set_x, set_y))))
 
+def cos_similarity(_x: list, _y: list) -> float:
+    """cos similarity for small value
+    """
+    vx = np.array(_x) * 10000
+    vy = np.array(_y) * 10000
+    return np.dot(vx, vy) / (np.linalg.norm(vx) * np.linalg.norm(vy))
+
 def main(input_text: str):
     # vectorize input_text with trained model
     nlp = spacy.load('ja_core_news_lg')
     doc_key = nlp(input_text)
     vec_key = doc_key.vector.tolist()
-
+    
     # search the most similar doc (Top 5)
     p = Path(HERE)
     vec_file_list = list(p.glob('./data/*.json'))
@@ -44,7 +52,7 @@ def main(input_text: str):
         with open(str(vec_file_path), 'r', encoding='utf-8') as f:
             cur_vec = json.load(f)
 
-        similarity = overlap(vec_key, cur_vec)
+        similarity = cos_similarity(vec_key, cur_vec)
         similarity_l.append(similarity)
 
     df_sim_tbl = pd.DataFrame({'user_id': uuid_l, 'similarity': similarity_l})
