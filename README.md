@@ -52,6 +52,10 @@ python -m spacy download ja_core_news_lg
 source env/bin/activate
 # set environ values
 source ./set-envval.sh
-# execute script
-python main.py
+# vectorize user's posts
+python vectorize_user.py
+# matching simulation
+python matching_simulator.py --cmd Pythonに詳しいのは誰？
+python matching_simulator.py --file question.txt
+python matching_simulator.py --user U01N5N64NNN
 ```
