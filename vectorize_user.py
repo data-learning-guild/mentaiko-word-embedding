@@ -3,12 +3,13 @@
     - harder but better: train custom model with spaCy or gensim
 """
 
+import json
 import os
 from pathlib import Path
-from tqdm import tqdm
 
 import pandas as pd
 import spacy
+from tqdm import tqdm
 
 from src.load import DlgDwhLoader
 from src.preprocess import clean_msg
@@ -28,7 +29,7 @@ def main():
     users = users_mart[['user_id', 'name']]
 
     # vectorizing messages per user
-    for (i, row) in tqdm(users.iterrows()):
+    for (i, row) in tqdm(users.iterrows(), desc='[save vector]'):
         # get per user
         uuid = row['user_id']
         uname = row['name']
@@ -44,8 +45,10 @@ def main():
         # > https://spacy.io/api/doc
         # > https://spacy.io/api/vectors
         doc = nlp(u_msgs_str)
-        doc.to_disk(HERE + '/data/' + uuid + '.spdoc')
-
+        vector = doc.vector.tolist()
+        with open(HERE + '/data/' + uuid + '.json', 'w', encoding='utf-8') as f:
+            json.dump(vector, f, indent=2)
+        
 
 if __name__ == "__main__":
     main()
