@@ -4,6 +4,7 @@
 """
 
 import argparse
+import json
 import os
 import sys
 from pathlib import Path
@@ -16,22 +17,36 @@ from src.load import DlgDwhLoader
 
 HERE = str(Path(__file__).resolve().parent)
 
+def overlap(_x: list, _y: list) -> float:
+    """overlap coefficient
+        Szymkiewicz-Simpson coefficient)
+        https://en.wikipedia.org/wiki/Overlap_coefficient
+    """
+    set_x = frozenset(_x)
+    set_y = frozenset(_y)
+    return len(set_x & set_y) / float(min(map(len, (set_x, set_y))))
+
 def main(input_text: str):
     # vectorize input_text with trained model
     nlp = spacy.load('ja_core_news_lg')
     doc_key = nlp(input_text)
+    vec_key = doc_key.vector.tolist()
 
     # search the most similar doc (Top 5)
     p = Path(HERE)
-    doc_file_list = list(p.glob('./data/*.spdoc'))
+    vec_file_list = list(p.glob('./data/*.json'))
     uuid_l = []
     similarity_l = []
-    for doc_file_path in doc_file_list:
-        uuid = doc_file_path.stem
+    for vec_file_path in vec_file_list:
+        uuid = vec_file_path.stem
         uuid_l.append(uuid)
-        doc_ = spacy.tokens.Doc(nlp.vocab).from_disk(str(doc_file_path))
-        similarity = doc_.similarity(doc_key)
+
+        with open(str(vec_file_path), 'r', encoding='utf-8') as f:
+            cur_vec = json.load(f)
+
+        similarity = overlap(vec_key, cur_vec)
         similarity_l.append(similarity)
+
     df_sim_tbl = pd.DataFrame({'user_id': uuid_l, 'similarity': similarity_l})
     df_sim_tbl = df_sim_tbl.sort_values('similarity', ascending=False)
     
