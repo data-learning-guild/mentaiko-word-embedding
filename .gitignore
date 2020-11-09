@@ -133,3 +133,6 @@ set-envval.sh
 data/
 .DS_Store
 data_save/
+neologd.csv
+user_sim_tbl.csv
+mecab-ipadic-neologd/
