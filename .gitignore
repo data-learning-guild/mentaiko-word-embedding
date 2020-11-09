@@ -131,3 +131,5 @@ dmypy.json
 # My settings
 set-envval.sh
 data/
+.DS_Store
+data_save/
