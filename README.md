@@ -10,6 +10,12 @@ See:
 - [spaCy Course][spacy_course]
 - [BQ Python client org][python_client_for_gbq]
 - [pandas-gbq からの移行 | Google Cloud Docs][pandas_gbq_and_gbq]
+- [Uploading objects with gsutil | Google Cloud Docs][gsutil_cp_to_gcs]
+- [Uploading objects with python | Google Cloud Docs][upload_to_gcs_python]
+- [gsutil cp | Google Cloud Reference][gsutil_cp_ref]
+- [Creating buckets with gsutil | Google Cloud Docs][gsutil_mb]
+- [Creating buckets with python | Google Cloud Docs][create_bucket_python]
+- [GCS Storage classes | Google Cloud Docs][gcs_storage_classes]
 
 [spacy_usage]: https://spacy.io/usage
 [spacy_models]: https://spacy.io/models
@@ -18,6 +24,12 @@ See:
 [spacy_course]: https://course.spacy.io/ja/
 [python_client_for_gbq]: https://googleapis.dev/python/bigquery/latest/index.html
 [pandas_gbq_and_gbq]: https://cloud.google.com/bigquery/docs/pandas-gbq-migration?hl=ja
+[gsutil_cp_to_gcs]: https://cloud.google.com/storage/docs/uploading-objects?hl=ja#gsutil
+[gsutil_cp_ref]: https://cloud.google.com/storage/docs/gsutil/commands/cp
+[gsutil_mb]: https://cloud.google.com/storage/docs/creating-buckets?hl=ja
+[gcs_storage_classes]: https://cloud.google.com/storage/docs/storage-classes
+[upload_to_gcs_python]: https://cloud.google.com/storage/docs/uploading-objects#storage-upload-object-python
+[create_bucket_python]: https://cloud.google.com/storage/docs/creating-buckets#storage-create-bucket-code_samples
 
 ---
 
@@ -73,4 +85,15 @@ python matching_simulator.py --file question.txt
 
 # matching simulation - with user id
 python matching_simulator.py --user U01N5N64NNN
+```
+
+---
+
+## Deployment
+
+- Create a bucket
+- Upload objects to the bucket
+
+```bash
+python upload_model.py
 ```
