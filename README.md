@@ -52,10 +52,25 @@ python -m spacy download ja_core_news_lg
 source env/bin/activate
 # set environ values
 source ./set-envval.sh
+# make dataset
+python make_dataset.py
+
+# on Google Colab
+# upload dataset (./data/train_dataset.json)
+# exec notebooks/train_doc2vec.ipynb
+# download model (./data/trained_doc2vec.model)
+
 # vectorize user's posts
 python vectorize_user.py
-# matching simulation
+
+# matching simulation - with cmd args
 python matching_simulator.py --cmd Pythonに詳しいのは誰？
+
+# matching simulation - with a file
+# $ cat question.txt
+# Pythonに詳しいのは誰？
 python matching_simulator.py --file question.txt
+
+# matching simulation - with user id
 python matching_simulator.py --user U01N5N64NNN
 ```
