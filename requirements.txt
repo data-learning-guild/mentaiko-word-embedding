@@ -4,3 +4,5 @@ pandas==1.1.4
 pyarrow==2.0.0
 google-cloud-bigquery-storage==2.1.0
 numpy==1.19.4
+Janome==0.4.1
+gensim==3.8.3
