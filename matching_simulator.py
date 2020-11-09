@@ -9,14 +9,18 @@ import os
 import sys
 from pathlib import Path
 
+from gensim.models.doc2vec import Doc2Vec
+from janome.tokenizer import Tokenizer
 import numpy as np
 import pandas as pd
 import spacy
 
 from src.load import DlgDwhLoader
+from src.preprocess import clean_msg
 
 
 HERE = str(Path(__file__).resolve().parent)
+t = Tokenizer()
 
 def overlap(_x: list, _y: list) -> float:
     """overlap coefficient (Unuse)
@@ -36,13 +40,17 @@ def cos_similarity(_x: list, _y: list) -> float:
 
 def main(input_text: str, input_uid: str):
     key_vector = []
+    model = Doc2Vec.load('./data/trained_doc2vec.model')
     
     # set key vector
     if input_text is not None:
         # vectorize input_text with trained model
-        nlp = spacy.load('ja_core_news_lg')
-        doc_key = nlp(input_text)
-        key_vector = doc_key.vector.tolist()
+        # spaCy version: # nlp = spacy.load('ja_core_news_lg')
+        # spaCy version: # doc_key = nlp(input_text)
+        # spaCy version: # key_vector = doc_key.vector.tolist()
+        cleaned_text = clean_msg(input_text)
+        cleaned_text_wakati = list(t.tokenize(cleaned_text, wakati=True))
+        key_vector = model.infer_vector(cleaned_text_wakati).tolist()
     elif input_uid is not None:
         p = Path('./data/{}.json'.format(input_uid))
         if p.exists():
@@ -62,6 +70,8 @@ def main(input_text: str, input_uid: str):
             # 同じベクトルのCOS類以度は計算しない
             if input_uid == vec_file_path.stem:
                 continue
+        if vec_file_path.stem in ['dataset', 'test_dataset', 'train_dataset']:
+            continue
         
         uuid = vec_file_path.stem
         uuid_l.append(uuid)
