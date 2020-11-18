@@ -67,7 +67,7 @@ def main():
     upload_blob(bucket_name, str(p_model), p_model.name)
 
     # upload users table
-    p_list = list(p.glob('users.csv'))
+    p_list = list(p.glob('users.csv.pkl'))
     p_users_tbl = p_list[0] if len(p_list) > 0 else None
     if p_users_tbl is None:
         print('users tbl path is invalid.')
