@@ -136,3 +136,4 @@ data_save/
 neologd.csv
 user_sim_tbl.csv
 mecab-ipadic-neologd/
+.history/
