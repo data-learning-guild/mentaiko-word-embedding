@@ -31,6 +31,7 @@ def main():
     loader = DlgDwhLoader(os.environ['BQ_PROJECT_ID'])
     users_mart = loader.users_mart().to_dataframe()
     users = users_mart[['user_id', 'name']]
+    users.to_csv('./data/users.csv', index=False)
 
     # vectorizing messages per user
     for (i, row) in tqdm(list(users.iterrows()), desc='[save vector]'):
