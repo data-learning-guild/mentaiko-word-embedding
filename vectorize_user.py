@@ -5,6 +5,7 @@
 
 import json
 import os
+import pickle
 from pathlib import Path
 
 from gensim.models.doc2vec import Doc2Vec
@@ -31,7 +32,8 @@ def main():
     loader = DlgDwhLoader(os.environ['BQ_PROJECT_ID'])
     users_mart = loader.users_mart().to_dataframe()
     users = users_mart[['user_id', 'name']]
-    users.to_csv('./data/users.csv', index=False)
+    with open('./data/users.csv.pkl', 'wb') as f:
+        pickle.dump(users, f)
 
     # vectorizing messages per user
     for (i, row) in tqdm(list(users.iterrows()), desc='[save vector]'):
